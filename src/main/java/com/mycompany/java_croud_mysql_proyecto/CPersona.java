@@ -175,10 +175,10 @@ public class CPersona {
         
         CConexion objConexion2 = new CConexion();
         
-        String consulta1 = "UPDATE persona SET nombre = ?, apellido = ?, nom_usuario = ?, bio_perfil = ?, email = ?, telefono = ?, direccion = ?, fecha_nacimiento = ?, contrasena = ?, foto_perfil = ? WHERE cedula = ?;";
         
+        String consulta1 = "UPDATE persona SET nombre = ?, apellido = ?, nom_usuario = ?, bio_perfil = ?, email = ?, telefono = ?, direccion = ?, fecha_nacimiento = ?, contrasena = ?, foto_perfil = ? WHERE cedula = ?;";
         try{
-            
+
            CallableStatement cs = objConexion2.estableceConexion().prepareCall(consulta1);
             cs.setString(1, getNombre());
             cs.setString(2, getApellido());
@@ -191,14 +191,15 @@ public class CPersona {
             cs.setString(9, getContrasena());
             cs.setString(10, getFoto_perfil());
             cs.setString(11, getCedula());
-            
+
             cs.execute();
-            
+
             JOptionPane.showMessageDialog(null, "Modificacion exitosa");
 
         }catch(SQLException e4){
             JOptionPane.showMessageDialog(null, "No se modifico, error: "+e4.toString());
         }
+        
     }
 
     public void EliminarPersonas(JTextField paramCedula){
