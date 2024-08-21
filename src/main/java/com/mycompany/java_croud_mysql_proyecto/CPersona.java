@@ -5,15 +5,12 @@
 package com.mycompany.java_croud_mysql_proyecto;
 
 import java.awt.HeadlessException;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -173,12 +170,12 @@ public class CPersona {
         setTelefono(paramTelefono.getText());
         setDireccion(paramDireccion.getText());
         setNacimiento(paramNacimiento.getText());
-        setContrasena(paramCedula.getText());
-        setFoto_perfil(paramCedula.getText());
+        setContrasena(paramContrasena.getText());
+        setFoto_perfil(paramFoto_perfil.getText());
         
         CConexion objConexion2 = new CConexion();
         
-        String consulta1 = "UPDATE persona SET persona.nombre = ?, SET persona.apellido = ?, SET persona.nom_usuario = ?, SET persona.bio_perfil = ?, SET persona.email = ?, SET persona.telefono = ?, SET persona.direccion = ?, SET persona.fecha_nacimiento = ?, SET persona.contrasena = ?, SET persona.foto_perfil = ?, WHERE persona.cedula = ?;";
+        String consulta1 = "UPDATE persona SET nombre = ?, apellido = ?, nom_usuario = ?, bio_perfil = ?, email = ?, telefono = ?, direccion = ?, fecha_nacimiento = ?, contrasena = ?, foto_perfil = ? WHERE cedula = ?;";
         
         try{
             
