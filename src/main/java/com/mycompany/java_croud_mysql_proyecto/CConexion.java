@@ -16,7 +16,7 @@ public class CConexion {
     
     Connection conectar = null;
     String usuario = "root";
-    String contrasena = "1234";
+    String contrasena = "root"; //1234
     String bd = "ProyectoBases";
     String servidor = "localhost";
     String puerto = "3306";
@@ -33,4 +33,4 @@ public class CConexion {
         return conectar;
     }
     
-}
+} 

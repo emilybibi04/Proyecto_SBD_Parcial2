@@ -309,5 +309,20 @@ public class CPersona {
     public void setFoto_perfil(String foto_perfil) {
         this.foto_perfil = foto_perfil;
     }
+    public void deseleccionarPersona(JTable paramTablePedidos,JTextField paramCedula, JTextField paramNombre, JTextField paramApellido, JTextField paramNom_usuario, JTextField paramBio_perfil, JTextField paramEmail, JTextField paramTelefono, JTextField paramDireccion, JTextField paramNacimiento, JTextField paramContrasena, JTextField paramFoto_perfil) {
+        // Limpiar los campos de texto
+        paramTablePedidos.clearSelection();
+        paramCedula.setText("");
+        paramNombre.setText("");
+        paramApellido.setText("");
+        paramNom_usuario.setText("");
+        paramBio_perfil.setText("");
+        paramEmail.setText("");
+        paramTelefono.setText("");
+        paramDireccion.setText("");
+        paramNacimiento.setText("");
+        paramContrasena.setText("");
+        paramFoto_perfil.setText("");
+    }
     
 }

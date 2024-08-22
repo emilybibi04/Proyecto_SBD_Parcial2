@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -19,41 +20,30 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-public class Pedido {
-    private int idPedido;
+public class CPedido {
+    private int idPedido; //PEDIDO TIENE ID
     private double precioTotal;
     private String estado;
     private int cantProductos;
-    private Date fecha;
-    private Time hora;
+    private String fecha;
+    private String hora;
     private String tipoEntrega;
     private String cedula;
 
-    public Pedido() {
+    public CPedido() {
         // Constructor vacío
     }
 
-    /*
-    public Pedido(int idPedido, double precioTotal, String estado, int cantProductos, Date fecha, Time hora, String tipoEntrega, String cedula) {
-        this.idPedido = idPedido;
-        this.precioTotal = precioTotal;
-        this.estado = estado;
-        this.cantProductos = cantProductos;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.tipoEntrega = tipoEntrega;
-        this.cedula = cedula;
-    }*/
     
-    public void InsertarPedido(JTextField paramPrecioTotal, JComboBox<String> paramEstado, JTextField paramCantProductos, JTextField paramFecha, JTextField paramHora, JComboBox<String> paramTipoEntrega, JTextField paramCedula) {
-        // Asignar valores a los atributos
-        double precioTotal = Double.parseDouble(paramPrecioTotal.getText());
-        String estado = paramEstado.getSelectedItem().toString();
-        int cantProductos = Integer.parseInt(paramCantProductos.getText());
-        String fecha = paramFecha.getText();
-        String hora = paramHora.getText();
-        String tipoEntrega = paramTipoEntrega.getSelectedItem().toString();
-        String cedula = paramCedula.getText();
+    public void InsertarPedido(JTextField paramPrecioTotal,JTextField paramEstado, JTextField paramCantProductos, JTextField paramFecha, JTextField paramHora, JTextField paramTipoEntrega, JTextField paramCedula) {
+        
+        setPrecioTotal(Double.parseDouble(paramPrecioTotal.getText()));
+        setEstado(paramEstado.getText());
+        setCantProductos(Integer.parseInt(paramCantProductos.getText()));
+        setFecha(paramFecha.getText());
+        setHora(paramHora.getText());
+        setTipoEntrega(paramTipoEntrega.getText());
+        setCedula(paramCedula.getText());
 
         // Crear una instancia de la conexión
         CConexion objConexion1 = new CConexion();
@@ -92,7 +82,7 @@ public class Pedido {
         paramTableTotalPedidos.setRowSorter(ordenarTabla);
 
         // Definir las columnas del modelo
-        modelo.addColumn("ID Pedido");
+        modelo.addColumn("ID Pedido"); 
         modelo.addColumn("Precio Total");
         modelo.addColumn("Estado");
         modelo.addColumn("Cantidad Productos");
@@ -107,7 +97,7 @@ public class Pedido {
         // Consulta SQL para obtener los datos
         String sql = "SELECT * FROM Pedido";
 
-        String[] datos = new String[8]; // Ajustar el tamaño del arreglo según el número de columnas
+        String[] datos = new String[8]; 
         Statement st;
 
         try {
@@ -136,7 +126,7 @@ public class Pedido {
         }
     }
     
-    public void seleccionarPedido(JTable paramTablePedidos, JTextField paramIdPedido, JTextField paramPrecioTotal, JTextField paramEstado, JTextField paramCantProductos, JTextField paramFecha, JTextField paramHora, JTextField paramTipoEntrega, JTextField paramCedula) {
+    public void seleccionarPedido(JTable paramTablePedidos, JLabel paramIdPedido, JTextField paramPrecioTotal, JTextField paramEstado, JTextField paramCantProductos, JTextField paramFecha, JTextField paramHora, JTextField paramTipoEntrega, JTextField paramCedula) {
         try {
             int fila = paramTablePedidos.getSelectedRow();
 
@@ -158,18 +148,34 @@ public class Pedido {
         }
     }
     
-    /*
-    public void modificarPedido(JTextField paramIdPedido, JTextField paramPrecioTotal, JComboBox<Estado> paramEstado, JTextField paramCantProductos, JTextField paramFecha, JTextField paramHora, JComboBox<TipoEntrega> paramTipoEntrega, JTextField paramCedula) {
-        
-        setIdPedido(Integer.parseInt(paramIdPedido.getText()));
-        setPrecioTotal(Double.parseDouble(paramPrecioTotal.getText()));
-        setEstado(paramEstado.getSelectedItem().toString());
-        setCantProductos(Integer.parseInt(paramCantProductos.getText()));
-        setFecha(java.sql.Date.ValueOf(paramFecha.getText()));
-        setHora(java.sql.Time.ValueOf(paramHora.getText()));
-        setTipoEntrega(paramTipoEntrega.getSelectedItem().toString());
-        setCedula(paramCedula.getText());
+    public void deseleccionarPedido(JTable paramTablePedidos, JLabel paramIdPedido, JTextField paramPrecioTotal, JTextField paramEstado, JTextField paramCantProductos, JTextField paramFecha, JTextField paramHora, JTextField paramTipoEntrega, JTextField paramCedula) {
+        // Desseleccionar cualquier fila en la tabla
+        paramTablePedidos.clearSelection();
 
+        // Limpiar los campos
+        paramIdPedido.setText("");
+        paramPrecioTotal.setText("");
+        paramEstado.setText("");
+        paramCantProductos.setText("");
+        paramFecha.setText("");
+        paramHora.setText("");
+        paramTipoEntrega.setText("");
+        paramCedula.setText("");
+    }
+    
+   
+    public void modificarPedido( JTextField paramPrecioTotal, JTextField paramEstado, JTextField paramCantProductos, JTextField paramFecha, JTextField paramHora, JTextField paramTipoEntrega, JTextField paramCedula,JLabel paramId) { //Combo box??
+        
+        
+        setPrecioTotal(Double.parseDouble(paramPrecioTotal.getText()));
+        setEstado(paramEstado.getText()); //getSelectedItem().toString()
+        setCantProductos(Integer.parseInt(paramCantProductos.getText()));
+        setFecha(paramFecha.getText());
+        setHora(paramHora.getText());
+        setTipoEntrega(paramTipoEntrega.getText());//getSelectedItem().toString()
+        setCedula(paramCedula.getText());
+        setIdPedido(Integer.parseInt(paramId.getText()));
+        
         CConexion objConexion2 = new CConexion();
 
         String consulta1 = """
@@ -180,14 +186,15 @@ public class Pedido {
 
         try {
             CallableStatement cs = objConexion2.estableceConexion().prepareCall(consulta1);
-            cs.setDouble(1, Double.parseDouble(getPrecioTotal())); // Convertir el precio total a double
-            cs.setString(2, getEstado());
-            cs.setInt(3, Integer.parseInt(getCantProductos())); // Convertir la cantidad de productos a entero
-            cs.setDate(4, java.sql.Date.valueOf(getFecha())); // Convertir la fecha a java.sql.Date
-            cs.setTime(5, java.sql.Time.valueOf(getHora())); // Convertir la hora a java.sql.Time
-            cs.setString(6, getTipoEntrega());
-            cs.setString(7, getCedula());
-            cs.setInt(8, Integer.parseInt(getIdPedido())); // Convertir el ID del pedido a entero
+            cs.setDouble(1, getPrecioTotal()); // Convertir el precio total a double
+    cs.setString(2, getEstado());
+    cs.setInt(3, getCantProductos()); // Convertir la cantidad de productos a entero
+    cs.setDate(4, java.sql.Date.valueOf(getFecha())); // Convertir la fecha a java.sql.Date
+    cs.setTime(5, java.sql.Time.valueOf(getHora())); // Convertir la hora a java.sql.Time
+    cs.setString(6, getTipoEntrega());
+    cs.setString(7, getCedula());
+    cs.setInt(8, getIdPedido());
+            
 
             cs.execute();
 
@@ -195,19 +202,18 @@ public class Pedido {
         } catch (SQLException e4) {
             JOptionPane.showMessageDialog(null, "No se modificó, error: " + e4.toString());
         }
-    }*/
+    }
     
-    /*
-    public void EliminarPedido(JTextField paramIdPedido) {
-        setIdPedido(paramIdPedido.getText());
-
+    
+    public void EliminarPedido(JLabel paramIdPedido) {
+        setIdPedido(Integer.parseInt(paramIdPedido.getText()));
         CConexion objConexion3 = new CConexion();
 
         String consulta3 = "DELETE FROM Pedido WHERE id_pedido = ?;";
 
         try {
             CallableStatement cs = objConexion3.estableceConexion().prepareCall(consulta3);
-            cs.setInt(1, Integer.parseInt(getIdPedido())); // Convertir el ID a entero
+            cs.setInt(1, getIdPedido()); // Convertir el ID a entero
 
             cs.execute();
 
@@ -215,7 +221,7 @@ public class Pedido {
         } catch (Exception e5) {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar, error: " + e5.toString());
         }
-    }*/ 
+    }
     
 
     
@@ -255,19 +261,19 @@ public class Pedido {
         this.cantProductos = cantProductos;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
